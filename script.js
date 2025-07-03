@@ -36,9 +36,7 @@ const myWidget = cloudinary.createUploadWidget(
           const object_div = document.getElementById('object_div');
           var elem = document.createElement('img');
           elem.setAttribute('src', result.info.secure_url);
-          elem.setAttribute('width', '90%');
           elem.setAttribute('id', 'original');
-          elem.style.marginLeft = '15px';
           document.getElementById('orig_div').appendChild(elem);
           document.getElementById('orig_div').style.display = 'inline';
           document.getElementById('hiddenForm').style.display = 'flex';
@@ -153,6 +151,12 @@ document.getElementById('upload_widget').addEventListener(
 const handleSubmit = (event) => {
   event.preventDefault();
 
+  // Hide the original image and its container as soon as selections are made
+  const origDiv = document.getElementById('orig_div');
+  if (origDiv) {
+    origDiv.style.display = 'none';
+  }
+
   var elements = document.getElementById('choices').elements;
   const objects = [];
   for (let i = 1; i < elements.length; i++) {
@@ -185,11 +189,9 @@ const handleSubmit = (event) => {
       color +
       ';multiple_true/' +
       url.slice(place);
+    // Only show the spinner and recolored image after selections are made and original is hidden
     document.getElementById('transform_div').style.display = 'inline';
     document.getElementById('transform_heading').innerHTML = 'Recolored:';
-    //var elem = document.createElement("img");
-    //elem.setAttribute("src", transformation);
-    //elem.setAttribute("width", "80%");
 
     // Show the spinner
     document.getElementById('spinner').style.display = 'block';
@@ -204,12 +206,11 @@ const handleSubmit = (event) => {
       // Set the source of the transform_img
       document.getElementById('transform_img').src = transformation;
       document.getElementById('transform_url').innerHTML =
-        'Transformation URL:' + '<br/>' + transformation;
-      document.getElementById('transform_url').style.width = '90%';
+        'Transformation URL:' + '<br/>' + transformation.split('/').join('/<wbr>');
+      document.getElementById('transform_url').style.width = '50%';
     };
     img.src = transformation;
     document.getElementById('transform_img').src = transformation;
-    //document.getElementById("transform_div").appendChild(elem);
     for (let i = 1; i < elements.length; i++) {
       if (elements[i].checked) {
         document.getElementById(elements[i].value).checked = false;
