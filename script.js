@@ -207,7 +207,7 @@ const handleSubmit = (event) => {
       document.getElementById('transform_img').src = transformation;
       document.getElementById('transform_url').innerHTML =
         'Transformation URL:' + '<br/>' + transformation.split('/').join('/<wbr>');
-      document.getElementById('transform_url').style.width = '50%';
+      document.getElementById('transform_url').style.width = '90%';
     };
     img.src = transformation;
     document.getElementById('transform_img').src = transformation;
